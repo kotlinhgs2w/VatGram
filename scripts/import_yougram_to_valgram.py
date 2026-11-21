@@ -98,22 +98,19 @@ def main() -> int:
     settings = repo / "settings.gradle.kts"
     if settings.exists():
         value = settings.read_text(encoding="utf-8-sig")
-        value = replace_once(value, r'rootProject\\.name\\s*=\\s*"[^"]+"',
-                             'rootProject.name = "ValGram"', "root project name")
+        value = value.replace('rootProject.name = "Yougram"', 'rootProject.name = "ValGram"')
         settings.write_text(value, encoding="utf-8")
 
     app_gradle = repo / "app" / "build.gradle.kts"
     if app_gradle.exists():
         value = app_gradle.read_text(encoding="utf-8-sig")
-        value = replace_once(value, r'applicationId\\s*=\\s*"[^"]+"',
-                             'applicationId = "app.valgram"', "applicationId")
+        value = value.replace('applicationId = "app.yougram"', 'applicationId = "app.valgram"')
         app_gradle.write_text(value, encoding="utf-8")
 
     strings = repo / "app" / "src" / "main" / "res" / "values" / "strings.xml"
     if strings.exists():
         value = strings.read_text(encoding="utf-8-sig")
-        value = replace_once(value, r'(<string\\s+name="app_name">)[^<]*(</string>)',
-                             r'\\1ValGram\\2', "app display name")
+        value = value.replace('<string name="app_name">Yougram</string>', '<string name="app_name">ValGram</string>')
         strings.write_text(value, encoding="utf-8")
 
     print("\nImport completed. Review the changes before committing.")
